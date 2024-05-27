@@ -1,0 +1,47 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Magnus JS Typer</title>
+    <style>
+        #textinput {
+            width: 300px; /* Set the width of the input box */
+            height: 50px; /* Set the height of the input box */
+            font-size: 16px; /* Increase the font size */
+            padding: 10px; /* Add some padding for better readability */
+        }
+    </style>
+</head>
+<body>
+<div id="textoutput"></div>
+<form action="#" id="form">
+    <input id="textinput" type="text">
+    <input type="submit" value="Submit">
+</form>
+
+<script type="text/javascript">
+    // Load saved texts on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        var savedTexts = JSON.parse(localStorage.getItem('savedTexts')) || [];
+        var textOutput = document.getElementById('textoutput');
+        savedTexts.forEach(function(text) {
+            var p = document.createElement('p');
+            p.innerText = text;
+            textOutput.appendChild(p);
+        });
+    });
+
+    document.getElementById('form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the form from submitting
+        var inputText = document.getElementById('textinput').value;
+        var savedTexts = JSON.parse(localStorage.getItem('savedTexts')) || [];
+        savedTexts.push(inputText);
+        localStorage.setItem('savedTexts', JSON.stringify(savedTexts)); // Save the texts
+
+        var p = document.createElement('p');
+        p.innerText = inputText;
+        document.getElementById('textoutput').appendChild(p);
+
+        document.getElementById('textinput').value = ''; // Clear the input
+    });
+</script>
+</body>
+</html>
